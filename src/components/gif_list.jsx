@@ -1,17 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Gif from './gif';
 // eslint-disable-next-line react/prefer-stateless-function
-class GifList extends Component {
-  renderList = () => {
-    return this.props.gifs.map(gif => <Gif id={gif.id} key={gif.id} />);
-  }
+// without destructuring
+// const GifList = (props) => {
+//   return (
+//     <div className="gif-list">
+//       {props.gifs.map(gif => <Gif id={gif.id} key={gif.id} selectGif={props.selectGif} />)}
+//     </div>
+//   );
+// };
 
-  render () {
-    return (
-      <div className="gif-list">
-        {this.renderList()}
-      </div>
-    );
-  }
-}
+// Using destructuring
+const GifList = ({ gifs, selectGif }) => { // this is destructuring
+  return (
+    <div className="gif-list">
+      {gifs.map(({ id }) => <Gif id={id} key={id} selectGif={selectGif} />)}
+    </div>
+  );
+};
 export default GifList;

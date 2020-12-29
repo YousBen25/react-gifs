@@ -5,18 +5,19 @@ import SearchBar from './search_bar';
 import Gif from './gif';
 import GifList from './gif_list';
 // eslint-disable-next-line react/prefer-stateless-function
+const GIPHY_API_KEY = 'HJsgTNdskiMs9S7xRO29GoX17Ay3jLxP';
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       gifs: [],
-      selectedGifId: "lMBbqAihc870APGshH"
+      selectedGifId: null
     };
   }
 
   search = (query) => {
-    giphy('HJsgTNdskiMs9S7xRO29GoX17Ay3jLxP').search({
+    giphy({ apiKey: GIPHY_API_KEY, https: true }).search({
       q: query,
       rating: 'g',
       limit: 10
@@ -24,6 +25,12 @@ class App extends Component {
       this.setState({
         gifs: result.data
       });
+    });
+  }
+
+  selectGif = (id) => {
+    this.setState({
+      selectedGifId: id
     });
   }
 
@@ -37,7 +44,7 @@ class App extends Component {
           </div>
         </div>
         <div className="right-scene">
-          <GifList gifs={this.state.gifs} />
+          <GifList gifs={this.state.gifs} selectGif={this.selectGif} />
         </div>
       </div>
     );
